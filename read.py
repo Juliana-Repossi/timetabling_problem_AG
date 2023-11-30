@@ -50,13 +50,13 @@ def read_entry(path_file):
                 #dificuldade relativa a qtd de aulas na semana
                 course.dificult += CONSTANT_DIFICULDADE_QTD_AULAS*(int(atributos[2])/n_days)
                 #dificuldade relativa a qtd de aulas minimas na semana
-                course.dificult += CONSTANT_DIFICULDADE_QTD_AULAS_MIN*(int(atributos[3])/int(atributos[2]))
+                # course.dificult += CONSTANT_DIFICULDADE_QTD_AULAS_MIN*(int(atributos[3])/int(atributos[2]))
 
                 if atributos[1] in hash_prof:
                     hash_prof[atributos[1]] +=1
                 else:
                     hash_prof[atributos[1]] = 1 
-               
+
             #linha em branco
             file.readline()
             #ROOMS
@@ -69,7 +69,7 @@ def read_entry(path_file):
                 atributos = file.readline().split()
                 list_rooms.append(Room(atributos[0],int(atributos[1])))
             
-            list_rooms.sort(key=lambda room: room.tam, reverse=True)
+            list_rooms.sort(key=lambda room: room.tam)
 
             #linha em branco
             file.readline()
@@ -105,14 +105,17 @@ def read_entry(path_file):
                 else:
                     hash_inv[atributos[0]] = 1
 
-            for period in array_curricula:
-                for course in period:
+            for period in range(0,n_curricula):
+                for course in array_curricula[period]:
                     #dificuldade relativa a qtd de inviabilidades
                     if course.name in hash_inv:
                         course.dificult += CONSTANT_DIFICULDADE_INVIAB*(hash_inv[course.name]/n_days*n_periods_per_day)
                     #dificuldade relativa a qtd de professores
                     course.dificult += CONSTANT_DIFICULDADE_PROF*(hash_prof[course.teacher]/n_courses)
-                period.sort(key=lambda course: course.dificult, reverse=True)
+            
+            for period in range(0,n_curricula):
+                array_curricula[period].sort(key=lambda course: course.dificult, reverse=True)
+            
             return n_days,n_periods_per_day,n_curricula,list_rooms, array_curricula, matriz_iviab
 
     except FileNotFoundError:
