@@ -358,10 +358,10 @@ class ImplAG:
         if matriz_inviab[j][k].get(mat.course.name) is not None:
             return False
         
-        # verificar se já há um professor dando essa aula nessa coluna
-        for curr in range(0,n_curricula):
-            if ind.timetabling[curr][j][k] is not None and  ind.timetabling[curr][j][k].course.teacher == mat.course.teacher:
-                return False
+        # # verificar se já há um professor dando essa aula nessa coluna
+        # for curr in range(0,n_curricula):
+        #     if ind.timetabling[curr][j][k] is not None and  ind.timetabling[curr][j][k].course.teacher == mat.course.teacher:
+        #         return False
             
         return True
     
@@ -511,6 +511,8 @@ class ImplAG:
         print(f"time: {self.real_time}")
         print(f"iter: {self.real_iter}")
         print(f"custo: {self.best_score}")
+        print(f"rest graves: {self.min_violations}")
+
         print(self.best_timetabling)
         exit(0)
          

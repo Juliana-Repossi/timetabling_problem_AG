@@ -10,12 +10,12 @@ def main():
     n_days,n_periods_per_day,n_curricula,list_rooms, array_curricula, matriz_inviab, hash_inv_mat= read_entry(caminho_do_arquivo)
 
     ############### Parâmetros do AG ###############
-    AG = ImplAG(300,0.7,0.8,0.6,1,20000,192)
+    AG = ImplAG(300,0.6,0.8,0.6,1,20000,1920)
 
     ############### Inicialização da População ###############
 
     # Ideia 1: Inicialização aleatória - 1/3 do tamanho da pop
-    AG.inicializacao_aleatoria(n_days,n_periods_per_day,n_curricula,list_rooms,array_curricula)
+    # AG.inicializacao_aleatoria(n_days,n_periods_per_day,n_curricula,list_rooms,array_curricula)
 
     # Ideia 2: Inicialização com bons horários em um período(alguma inteligencia de minimização de danos)
     AG.inicializacao_min_harm(n_days,n_periods_per_day,n_curricula,list_rooms,array_curricula,matriz_inviab,hash_inv_mat)
@@ -49,7 +49,7 @@ def main():
         AG.crossover_pop()
 
         #de matérias
-        AG.crossover_classtimes(len(list_rooms))
+        # AG.crossover_classtimes(len(list_rooms))
         
         #mutação
         AG.mutation_pop(list_rooms,matriz_inviab)
