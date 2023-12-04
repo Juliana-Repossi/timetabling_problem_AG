@@ -500,6 +500,7 @@ class ImplAG:
         print(f"score: {self.best_score}")
         print(f"time: {self.real_time}")
         print(f"iter: {self.real_iter}")
+        print(f"rest graves: {self.min_violations}")
         print(self.best_timetabling)
 
         return True

@@ -10,7 +10,7 @@ def main():
     n_days,n_periods_per_day,n_curricula,list_rooms, array_curricula, matriz_inviab, hash_inv_mat= read_entry(caminho_do_arquivo)
 
     ############### Parâmetros do AG ###############
-    AG = ImplAG(600,0.7,0.8,0.5,1,20000,192)
+    AG = ImplAG(300,0.7,0.8,0.6,1,20000,192)
 
     ############### Inicialização da População ###############
 
