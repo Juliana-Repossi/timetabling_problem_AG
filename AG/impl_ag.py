@@ -166,7 +166,7 @@ class ImplAG:
             return mom.copy()
         
         # Criar mascara para crossover uniforme 
-        mask = [0 if i%2 == 0 else 1 for i in range(0,curricula)]
+        mask = [0 if i%6 == 0 else 1 for i in range(0,curricula)]
         np.random.shuffle(mask)
 
 
@@ -358,10 +358,10 @@ class ImplAG:
         if matriz_inviab[j][k].get(mat.course.name) is not None:
             return False
         
-        # # verificar se já há um professor dando essa aula nessa coluna
-        # for curr in range(0,n_curricula):
-        #     if ind.timetabling[curr][j][k] is not None and  ind.timetabling[curr][j][k].course.teacher == mat.course.teacher:
-        #         return False
+        # verificar se já há um professor dando essa aula nessa coluna
+        for curr in range(0,n_curricula):
+            if ind.timetabling[curr][j][k] is not None and  ind.timetabling[curr][j][k].course.teacher == mat.course.teacher:
+                return False
             
         return True
     
