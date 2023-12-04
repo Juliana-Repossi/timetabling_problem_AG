@@ -4,9 +4,9 @@ from entities.room import Room
 def read_entry(path_file):
 
     CONSTANT_DIFICULDADE_QTD_AULAS = 10
-    CONSTANT_DIFICULDADE_INVIAB = 15
-    CONSTANT_DIFICULDADE_PROF = 20
-    CONSTANT_DIFICULDADE_QTD_AULAS_MIN = 1
+    CONSTANT_DIFICULDADE_INVIAB = 20
+    # CONSTANT_DIFICULDADE_PROF = 20
+    # CONSTANT_DIFICULDADE_QTD_AULAS_MIN = 1
 
     try:
         with open(path_file, 'r') as file:
@@ -39,7 +39,7 @@ def read_entry(path_file):
             #tabela hash para calcular a sobrecarga de um prof
                 #Quanto mais matérias um prof leciona - a tendencia é que 
                 #mais dificil será alocá-la
-            hash_prof = {}
+            # hash_prof = {}
             
             for i in range(0,n_courses):
                 atributos = file.readline().split()
@@ -47,15 +47,15 @@ def read_entry(path_file):
                 hash_courses[atributos[0]] = (course)
                 #para calcular o coeficiente de dificuldade de alocar um Course:
                 
-                #dificuldade relativa a qtd de aulas na semana
+                #dificuldade relativa a qtd de aulas na semana (0-1)
                 course.dificult += CONSTANT_DIFICULDADE_QTD_AULAS*(int(atributos[2])/n_days)
                 #dificuldade relativa a qtd de aulas minimas na semana
                 # course.dificult += CONSTANT_DIFICULDADE_QTD_AULAS_MIN*(int(atributos[3])/int(atributos[2]))
 
-                if atributos[1] in hash_prof:
-                    hash_prof[atributos[1]] +=1
-                else:
-                    hash_prof[atributos[1]] = 1 
+                # if atributos[1] in hash_prof:
+                #     hash_prof[atributos[1]] +=1
+                # else:
+                #     hash_prof[atributos[1]] = 1 
 
             #linha em branco
             file.readline()
@@ -96,10 +96,14 @@ def read_entry(path_file):
 
             #tabela hash para calcular as inviabilidades de uma discp
             hash_inv = {}
+            hash_inv_mat = {}
 
             for i in range(0,n_constraints):
                 atributos = file.readline().split()
                 matriz_iviab[int(atributos[2])][int(atributos[1])][atributos[0]] = 1
+                if atributos[0] not in hash_inv_mat:
+                    hash_inv_mat[atributos[0]] = []
+                hash_inv_mat[atributos[0]].append((int(atributos[2]),int(atributos[1])))
                 if atributos[0] in hash_inv:
                     hash_inv[atributos[0]] +=1
                 else:
@@ -111,12 +115,12 @@ def read_entry(path_file):
                     if course.name in hash_inv:
                         course.dificult += CONSTANT_DIFICULDADE_INVIAB*(hash_inv[course.name]/n_days*n_periods_per_day)
                     #dificuldade relativa a qtd de professores
-                    course.dificult += CONSTANT_DIFICULDADE_PROF*(hash_prof[course.teacher]/n_courses)
+                    # course.dificult += CONSTANT_DIFICULDADE_PROF*(hash_prof[course.teacher]/n_courses)
             
             for period in range(0,n_curricula):
                 array_curricula[period].sort(key=lambda course: course.dificult, reverse=True)
-            
-            return n_days,n_periods_per_day,n_curricula,list_rooms, array_curricula, matriz_iviab
+
+            return n_days,n_periods_per_day,n_curricula,list_rooms, array_curricula, matriz_iviab, hash_inv_mat
 
     except FileNotFoundError:
         return "Arquivo não encontrado ou caminho inválido."

@@ -11,5 +11,5 @@ class Course:
     def __str__(self):
         # return f"Nome: {self.name},Prof: {self.teacher},Qtd de aulas: {self.qtd_class_week},Qtd min de aulas: {self.qtd_min_day}, Qtd estudantes: {self.tam_students}, Dificuldade: {self.dificult}"
         # return f"{self.dificult}"
-        return f"Nome: {self.name},Qtd estudantes: {self.tam_students}"
-        #return self.name
+        return f"Nome: {self.name} ({self.tam_students})"
+        # return self.name
